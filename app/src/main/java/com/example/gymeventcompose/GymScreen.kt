@@ -1,6 +1,7 @@
 package com.example.gymeventcompose
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -10,9 +11,13 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,20 +34,20 @@ import com.example.gymeventcompose.ui.theme.Purple200
 
 @Composable
 fun GymScreen() {
- // hna ana 3ayz azhr kol el screens
-    val vm : GymsVIewModel = viewModel()
-    LazyColumn(){
+    // hna ana 3ayz azhr kol el screens
+    val vm: GymsVIewModel = viewModel()
+    LazyColumn() {
 
-       items(vm.getGyms()){
-           GymItem(it)
-       }
-    }
-
-  /*  Column(Modifier.verticalScroll(rememberScrollState())) {
-        ListOfGyms.forEach{// lhly 3la kol el lists ele 3ndk
+        items(vm.getGyms()) {
             GymItem(it)
         }
-    }*/
+    }
+
+    /*  Column(Modifier.verticalScroll(rememberScrollState())) {
+          ListOfGyms.forEach{// lhly 3la kol el lists ele 3ndk
+              GymItem(it)
+          }
+      }*/
 
 }
 
@@ -56,11 +61,30 @@ fun GymItem(gym: Gym) {
                 Modifier.weight(0.15f)
             ) // hna da m3nah anha hta5od 15% mn el screen
             GymDetails(
-                gym, Modifier.weight(0.85f)
+                gym, Modifier.weight(0.70f)
             )
+            FavouriteIcon(Modifier.weight(0.15f))
 
         }
     }
+}
+
+@Composable
+fun FavouriteIcon(modifier: Modifier) {
+    val isFavouriteState = remember{ mutableStateOf(false)}
+    val icons = if (isFavouriteState.value){
+        Icons.Filled.Favorite
+    }else{
+        Icons.Filled.FavoriteBorder
+    }
+    Image(
+        imageVector= icons,
+        contentDescription = " favourite Gym Icon",
+        modifier = Modifier.padding(8.dp).clickable {
+            isFavouriteState.value =! isFavouriteState.value
+        }
+    )
+
 }
 
 @Composable

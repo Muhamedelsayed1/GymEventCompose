@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.gymeventcompose.ui.Gym
 import com.example.gymeventcompose.ui.ListOfGyms
 import com.example.gymeventcompose.ui.theme.GymEventComposeTheme
@@ -29,8 +30,10 @@ import com.example.gymeventcompose.ui.theme.Purple200
 @Composable
 fun GymScreen() {
  // hna ana 3ayz azhr kol el screens
+    val vm : GymsVIewModel = viewModel()
     LazyColumn(){
-       items(ListOfGyms){
+
+       items(vm.getGyms()){
            GymItem(it)
        }
     }
